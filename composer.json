@@ -9,9 +9,11 @@
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/socialite": "~2.0",
+         "laravel/passport": "^4.0",
         "laravel/tinker": "~1.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.2",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
@@ -54,5 +56,11 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
+    },
+    "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.org"
     }
+  }
 }

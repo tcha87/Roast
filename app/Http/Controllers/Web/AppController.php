@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Web;
 
-use Illuminate\Http\Request;
+use Auth;
+use Request;
 use App\Http\Controllers\Controller;
-
 class AppController extends Controller
 {
   public function getApp(){
@@ -12,6 +12,7 @@ class AppController extends Controller
   }
 
   public function getLogin(){
+
         return view('login');
     }
 

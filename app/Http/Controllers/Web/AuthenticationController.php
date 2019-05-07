@@ -22,8 +22,8 @@ class AuthenticationController extends Controller
 
  public function getSocialCallback( $account ){
 
-   $socialUser =  Socialite::with('facebook')->user();
-   $user = User::where( 'provider_id', '=', $socialUser->id )
+  $socialUser = Socialite::with( $account )->user();
+   $user = User::where( 'provider_id', '=', $socialUser->id)
                  ->where( 'provider', '=', $account )
                          ->first();
 
@@ -47,7 +47,12 @@ class AuthenticationController extends Controller
       */
       Auth::login( $user );
 
-   return redirect('/');
+   return redirect('/#/home');
 
  }
+
+ public function getLogout(){
+        Auth::logout();
+        return redirect('/login');
+}
 }

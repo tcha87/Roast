@@ -1,24 +1,19 @@
 import CafeAPI from '../api/cafe.js';
 
 export const cafes = {
-  /*
-    Defines the state being monitored for the module.
-  */
+
     state: {
         cafes: [],
     cafesLoadStatus: 0,
 
     cafe: {},
-    cafeLoadStatus: 0
+    cafeLoadStatus: 0,
+    cafeAddStatus: 0
     },
 
-  /*
-    Defines the actions used to retrieve the data.
-  */
+
     actions: {
-    /*
-      Loads the cafes from the API
-    */
+
         loadCafes( { commit } ){
       commit( 'setCafesLoadStatus', 1 );
 
@@ -33,9 +28,7 @@ export const cafes = {
         });
     },
 
-    /*
-      Loads an individual cafe from the API
-    */
+
     loadCafe( { commit }, data ){
       commit( 'setCafeLoadStatus', 1 );
 
@@ -49,30 +42,38 @@ export const cafes = {
           commit( 'setCafeLoadStatus', 3 );
         });
 
-    }
     },
 
-  /*
-    Defines the mutations used
-  */
+    addCafe( { commit, state, dispatch }, data ){
+  commit( 'setCafeAddedStatus', 1 );
+
+  CafeAPI.postAddNewCafe( data.name, data.address, data.city, data.state, data.zip )
+      .then( function( response ){
+        commit( 'setCafeAddedStatus', 2 );
+        dispatch( 'loadCafes' );
+      })
+      .catch( function(){
+        commit( 'setCafeAddedStatus', 3 );
+      });
+}
+
+
+    },
+
     mutations: {
-    /*
-      Sets the cafes load status
-    */
+
+      setCafeAddedStatus( state, status ){
+  state.cafeAddStatus = status;
+},
+
     setCafesLoadStatus( state, status ){
       state.cafesLoadStatus = status;
     },
 
-    /*
-      Sets the cafes
-    */
     setCafes( state, cafes ){
       state.cafes = cafes;
     },
 
-    /*
-      Set the cafe load status
-    */
     setCafeLoadStatus( state, status ){
       state.cafeLoadStatus = status;
     },
@@ -95,6 +96,10 @@ export const cafes = {
     getCafesLoadStatus( state ){
       return state.cafesLoadStatus;
     },
+
+    getCafeAddStatus( state ){
+  return state.cafeAddStatus;
+},
 
     /*
       Returns the cafes.
